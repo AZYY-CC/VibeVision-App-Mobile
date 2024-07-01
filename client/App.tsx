@@ -1,11 +1,13 @@
 import { Provider } from "react-redux";
 import { store } from "./store";
-import { Auth } from "./screens";
+import RootNavigation from "./navigations/RootNavigation";
 
-export default function App() {
+const App = () => {
   return (
     <Provider store={store}>
-      <Auth />
+      <RootNavigation />
     </Provider>
   );
-}
+};
+
+export default App;
