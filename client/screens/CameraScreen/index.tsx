@@ -9,6 +9,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 
 import styles from "./styles";
+import { useNavigation } from "@react-navigation/core";
 
 const CameraScreen: React.FC = () => {
   const [hasCameraPermissions, setHasCameraPermissions] =
@@ -25,6 +26,7 @@ const CameraScreen: React.FC = () => {
   const cameraRef = useRef<CameraView>(null);
   const isFocused = useIsFocused();
 
+  const navigation = useNavigation();
   useEffect(() => {
     (async () => {
       const cameraStatus = await Camera.requestCameraPermissionsAsync();
@@ -53,7 +55,7 @@ const CameraScreen: React.FC = () => {
         const videoRecordResult = await cameraRef.current.recordAsync();
 
         const source = videoRecordResult?.uri;
-        //TODO: pass video uri into save component
+        navigation.navigate("createPost", { source });
       } catch (error) {
         console.warn(error);
       }
@@ -74,7 +76,7 @@ const CameraScreen: React.FC = () => {
       quality: 1,
     });
     if (!result.canceled) {
-      //TODO: pass video uri into save component
+      navigation.navigate("createPost", { source: result.assets[0].uri });
     }
   };
 
