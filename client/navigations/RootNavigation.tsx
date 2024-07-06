@@ -25,7 +25,7 @@ const RootNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {!authUserObj.authUser == null ? (
+        {authUserObj.authUser == null ? (
           <Stack.Screen
             name="auth"
             component={Auth}
