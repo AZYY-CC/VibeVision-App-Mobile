@@ -28,7 +28,7 @@ const CreatePost = ({ route }) => {
   const handleSavePost = async () => {
     setRequestRunning(true);
     try {
-      await dispatch(createPost(description, route.params.source));
+      await dispatch(createPost(description, route.params.source,route.params.sourceThumb));
       navigation.dispatch(StackActions.popToTop());
     } catch (error) {
       Alert.alert("Error", `${error}`);

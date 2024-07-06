@@ -4,12 +4,14 @@ import { Camera, CameraView } from "expo-camera";
 import { Audio } from "expo-av";
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
+import * as VideoThumbnails from "expo-video-thumbnails";
+
 import { useIsFocused } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/core";
 
 import { Feather } from "@expo/vector-icons";
 
 import styles from "./styles";
-import { useNavigation } from "@react-navigation/core";
 
 const CameraScreen: React.FC = () => {
   const [hasCameraPermissions, setHasCameraPermissions] =
@@ -55,7 +57,8 @@ const CameraScreen: React.FC = () => {
         const videoRecordResult = await cameraRef.current.recordAsync();
 
         const source = videoRecordResult?.uri;
-        navigation.navigate("createPost", { source });
+        const sourceThumb = await generateThumbnail(source);
+        navigation.navigate("createPost", { source, sourceThumb });
       } catch (error) {
         console.warn(error);
       }
@@ -76,7 +79,22 @@ const CameraScreen: React.FC = () => {
       quality: 1,
     });
     if (!result.canceled) {
-      navigation.navigate("createPost", { source: result.assets[0].uri });
+      let sourceThumb = await generateThumbnail(result.assets[0].uri);
+      navigation.navigate("createPost", {
+        source: result.assets[0].uri,
+        sourceThumb,
+      });
+    }
+  };
+
+  const generateThumbnail = async (source) => {
+    try {
+      const { uri } = await VideoThumbnails.getThumbnailAsync(source, {
+        time: 5000,
+      });
+      return uri;
+    } catch (e) {
+      console.warn(e);
     }
   };
 
