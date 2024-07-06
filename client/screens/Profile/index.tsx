@@ -1,21 +1,23 @@
-import { ScrollView } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import styles from "./styles";
-import { ProfileHeader, ProfileNavBar } from "../../components";
+import {
+  ProfileHeader,
+  ProfileNavBar,
+  ProfilePostsList,
+} from "../../components";
 import { useSelector } from "react-redux";
 
 const ProfileScreen = () => {
   const authUser = useSelector((state) => state.auth.authUser);
-  console.log(authUser);
+  const authUserPosts = useSelector((state) => state.posts.authUserPosts);
+
   return (
     <SafeAreaView style={styles.container}>
       <ProfileNavBar user={authUser} />
-      <ScrollView>
-        <ProfileHeader user={authUser} />
-        {/* <ProfilePostList posts={userPosts} /> */}
-      </ScrollView>
+      <ProfileHeader user={authUser} />
+      <ProfilePostsList posts={authUserPosts} />
     </SafeAreaView>
   );
 };

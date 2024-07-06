@@ -7,11 +7,13 @@ import { auth, db } from "../../configs/firebase";
 import { Dispatch } from "redux";
 import { USER_STATE_CHANGE } from "../constants";
 import { doc, onSnapshot } from "firebase/firestore";
+import { getPostsByUser } from "./post";
 
 export const userAuthStateListener = () => (dispatch: Dispatch) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       dispatch(getAuthUserData());
+      dispatch(getPostsByUser(auth.currentUser.uid));
     } else {
       dispatch({ type: USER_STATE_CHANGE, authUser: null, loaded: true });
     }
