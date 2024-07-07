@@ -3,8 +3,11 @@ import React from "react";
 import styles from "./styles";
 import { Avatar } from "react-native-paper";
 import { buttonStyles } from "../../../styles";
+import { useNavigation } from "@react-navigation/core";
 
 const ProfileHeader = ({ user }) => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Avatar.Icon size={80} icon={"account"} />
@@ -24,7 +27,10 @@ const ProfileHeader = ({ user }) => {
         </View>
       </View>
 
-      <TouchableOpacity style={buttonStyles.grayOutlinedButton}>
+      <TouchableOpacity
+        style={buttonStyles.grayOutlinedButton}
+        onPress={() => navigation.navigate("editProfile")}
+      >
         <Text style={buttonStyles.grayOutlinedButtonText}>Edit Profile</Text>
       </TouchableOpacity>
     </View>

@@ -9,8 +9,8 @@ import {
 } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import { auth, db } from "../../configs/firebase";
-import { saveMediaToStorage } from "./random";
 import { Dispatch } from "redux";
+import { saveMediaToStorage } from "../../services/random";
 
 export const createPost =
   (description, video, thumbnail) => async (dispatch: Dispatch) => {

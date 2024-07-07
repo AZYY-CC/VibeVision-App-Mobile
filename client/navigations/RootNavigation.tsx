@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Auth, CreatePost } from "../screens";
+import { Auth, CreatePost, EditProfile, EditProfileField } from "../screens";
 import { useDispatch, useSelector } from "react-redux";
 import { userAuthStateListener } from "../store/actions";
 import { View } from "react-native";
@@ -41,6 +41,16 @@ const RootNavigation = () => {
             <Stack.Screen
               name="createPost"
               component={CreatePost}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="editProfile"
+              component={EditProfile}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="editProfileField"
+              component={EditProfileField}
               options={{ headerShown: false }}
             />
           </>
