@@ -69,3 +69,14 @@ export const queryUsersByEmail = async (email: string) => {
     return Promise.reject(error);
   }
 };
+
+export const getUserById = async (id: string) => {
+  try {
+    const userDoc = doc(db, "user", id);
+    const snapshot = await getDoc(userDoc);
+
+    return snapshot.exists() ? snapshot.data() : null;
+  } catch (error) {
+    throw new Error("Failed to retrieve user data");
+  }
+};

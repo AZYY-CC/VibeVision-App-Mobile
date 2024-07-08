@@ -6,9 +6,12 @@ import React, {
   useRef,
 } from "react";
 import styles from "./styles";
+import { useUser } from "../../../hooks/userUser";
+import PostSingleOverlay from "./PostSingleOverlay";
 
 const PostSingle = ({ item }, parentRef) => {
   const ref = useRef<Video>(null);
+  const user = useUser(item.creator).data;
   useImperativeHandle(parentRef, () => ({
     play,
     unload,
@@ -64,6 +67,7 @@ const PostSingle = ({ item }, parentRef) => {
   };
   return (
     <>
+      <PostSingleOverlay user={user} post={item} />
       <Video
         ref={ref}
         style={styles.container}
