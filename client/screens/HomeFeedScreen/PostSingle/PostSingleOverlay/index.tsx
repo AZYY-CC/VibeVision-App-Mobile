@@ -1,6 +1,7 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import styles from "./styles";
+import { Ionicons } from "@expo/vector-icons";
 
 const PostSingleOverlay = ({ user, post }) => {
   return (
@@ -10,7 +11,21 @@ const PostSingleOverlay = ({ user, post }) => {
         <Text style={styles.description}>{post.description}</Text>
       </View>
 
-      <Image style={styles.avatar} source={{ uri: user?.photoURL }} />
+      <View style={styles.leftContainer}>
+        <TouchableOpacity>
+          <Image style={styles.avatar} source={{ uri: user?.photoURL }} />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.actionButton}>
+          <Ionicons color="white" size={40} name={"heart-outline"} />
+          <Text style={styles.actionButtonText}>0</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.actionButton}>
+          <Ionicons color="white" size={40} name={"chatbubble"} />
+          <Text style={styles.actionButtonText}>{post.commentsCount}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
