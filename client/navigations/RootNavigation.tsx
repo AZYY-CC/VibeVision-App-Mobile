@@ -10,7 +10,7 @@ import HomeNavigation from "./HomeNavigation";
 const Stack = createNativeStackNavigator();
 
 const RootNavigation = () => {
-  const authUserObj = useSelector((state) => state.auth);
+  const currentUserObj = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -18,14 +18,14 @@ const RootNavigation = () => {
     dispatch(userAuthStateListener());
   }, []);
 
-  if (!authUserObj.loaded) {
+  if (!currentUserObj.loaded) {
     return <View></View>;
   }
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {authUserObj.authUser == null ? (
+        {currentUserObj.currentUser == null ? (
           <Stack.Screen
             name="auth"
             component={Auth}

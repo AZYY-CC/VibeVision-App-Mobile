@@ -1,7 +1,7 @@
 import { CURRENT_USER_POSTS_UPDATE } from "../constants";
 
 const initialState = {
-  authUserPosts: null,
+  currentUserPosts: null,
 };
 
 export const posts = (state = initialState, action) => {
@@ -9,7 +9,7 @@ export const posts = (state = initialState, action) => {
     case CURRENT_USER_POSTS_UPDATE:
       return {
         ...state,
-        authUserPosts: action.currentUserPosts,
+        currentUserPosts: action.currentUserPosts,
       };
     default:
       return state;

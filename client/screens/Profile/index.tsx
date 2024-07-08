@@ -10,14 +10,14 @@ import {
 import { useSelector } from "react-redux";
 
 const ProfileScreen = () => {
-  const authUser = useSelector((state) => state.auth.authUser);
-  const authUserPosts = useSelector((state) => state.posts.authUserPosts);
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const currentUserPosts = useSelector((state) => state.posts.currentUserPosts);
 
   return (
     <SafeAreaView style={styles.container}>
-      <ProfileNavBar user={authUser} />
-      <ProfileHeader user={authUser} />
-      <ProfilePostsList posts={authUserPosts} />
+      <ProfileNavBar user={currentUser} />
+      <ProfileHeader user={currentUser} />
+      <ProfilePostsList posts={currentUserPosts} />
     </SafeAreaView>
   );
 };

@@ -12,18 +12,18 @@ import { getPostsByUser } from "./post";
 export const userAuthStateListener = () => (dispatch: Dispatch) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      dispatch(getAuthUserData());
+      dispatch(getCurrentUserData());
       dispatch(getPostsByUser(auth.currentUser.uid));
     } else {
-      dispatch({ type: USER_STATE_CHANGE, authUser: null, loaded: true });
+      dispatch({ type: USER_STATE_CHANGE, currentUser: null, loaded: true });
     }
   });
 };
 
-export const getAuthUserData = () => (dispatch: Dispatch) => {
+export const getCurrentUserData = () => (dispatch: Dispatch) => {
   const user = auth.currentUser;
   if (!user) {
-    dispatch({ type: USER_STATE_CHANGE, authUser: null, loaded: true });
+    dispatch({ type: USER_STATE_CHANGE, currentUser: null, loaded: true });
     return;
   }
 
@@ -32,11 +32,11 @@ export const getAuthUserData = () => (dispatch: Dispatch) => {
     if (doc.exists()) {
       dispatch({
         type: USER_STATE_CHANGE,
-        authUser: doc.data(),
+        currentUser: doc.data(),
         loaded: true,
       });
     } else {
-      dispatch({ type: USER_STATE_CHANGE, authUser: null, loaded: true });
+      dispatch({ type: USER_STATE_CHANGE, currentUser: null, loaded: true });
     }
   });
 };

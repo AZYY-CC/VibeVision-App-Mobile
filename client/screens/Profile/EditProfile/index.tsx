@@ -10,7 +10,7 @@ import * as ImagePicker from "expo-image-picker";
 import { saveUserProfileImage } from "../../../services/user";
 
 const EditProfile = () => {
-  const authUser = useSelector((state) => state.auth.authUser);
+  const currentUser = useSelector((state) => state.auth.currentUser);
   const navigation = useNavigation();
   const chooseImage = async () => {
     Alert.alert(
@@ -26,7 +26,7 @@ const EditProfile = () => {
     // });
     // if (!result.canceled) {
 
-    // TODO: Implement Change photoURL For AuthUser
+    // TODO: Implement Change photoURL For currentUser
     // saveUserProfileImage(result.assets[0].uri);
     // }
   };
@@ -39,7 +39,7 @@ const EditProfile = () => {
           style={styles.imageViewContainer}
           onPress={chooseImage}
         >
-          <Image style={styles.image} source={{ uri: authUser.photoURL }} />
+          <Image style={styles.image} source={{ uri: currentUser.photoURL }} />
           <View style={styles.imageOverlay} />
           <Feather name="camera" size={26} color="white" />
         </TouchableOpacity>
@@ -52,13 +52,13 @@ const EditProfile = () => {
             navigation.navigate("editProfileField", {
               title: "Display Name",
               field: "displayName",
-              value: authUser.displayName,
+              value: currentUser.displayName,
             })
           }
         >
           <Text>Display Name</Text>
           <View style={styles.fieldValueContainer}>
-            <Text>{authUser.displayName}</Text>
+            <Text>{currentUser.displayName}</Text>
             <Feather name="chevron-right" size={20} color="gray" />
           </View>
         </TouchableOpacity>
