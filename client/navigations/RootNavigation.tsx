@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userAuthStateListener } from "../store/actions";
 import { View } from "react-native";
 import HomeNavigation from "./HomeNavigation";
+import { Modal } from "../components";
 
 const Stack = createNativeStackNavigator();
 
@@ -56,6 +57,7 @@ const RootNavigation = () => {
           </>
         )}
       </Stack.Navigator>
+      <Modal />
     </NavigationContainer>
   );
 };
