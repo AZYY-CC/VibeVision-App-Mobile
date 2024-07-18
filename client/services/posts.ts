@@ -1,11 +1,18 @@
 import {
+  addDoc,
   collection,
   doc,
   getDoc,
   getDocs,
+  onSnapshot,
+  orderBy,
+  query,
   runTransaction,
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../configs/firebase";
+
+let commentListenerInstance = null;
 
 export const getFeed = async () => {
   const postCollection = collection(db, "posts");
@@ -57,7 +64,63 @@ export const updateLike = async (postId, uid, currentLikeState) => {
 
       transaction.update(postRef, { likesCount: newLikesCount });
     });
-  } catch (error: any) {
+  } catch (error) {
     throw new Error("Failed to update like state: " + error.message);
+  }
+};
+
+export const addComment = async (postId, creator, comment) => {
+  const commentsRef = collection(
+    doc(collection(db, "posts"), postId),
+    "comments"
+  );
+  const postRef = doc(db, "posts", postId);
+
+  try {
+    await runTransaction(db, async (transaction) => {
+      const postDoc = await transaction.get(postRef);
+      if (!postDoc.exists()) {
+        throw new Error("Post does not exist");
+      }
+
+      const newCommentsCount = postDoc.data().commentsCount + 1;
+
+      await addDoc(commentsRef, {
+        creator,
+        comment,
+        creation: serverTimestamp(),
+      });
+
+      transaction.update(postRef, { commentsCount: newCommentsCount });
+    });
+  } catch (error) {
+    console.error("Error adding comment: ", error);
+  }
+};
+
+export const commentListener = (postId, setCommentList) => {
+  const commentsRef = collection(
+    doc(collection(db, "posts"), postId),
+    "comments"
+  );
+  const commentsQuery = query(commentsRef, orderBy("creation", "desc"));
+
+  commentListenerInstance = onSnapshot(commentsQuery, (snapshot) => {
+    if (snapshot.docChanges().length === 0) {
+      return;
+    }
+    const comments = snapshot.docs.map((doc) => {
+      const id = doc.id;
+      const data = doc.data();
+      return { id, ...data };
+    });
+    setCommentList(comments);
+  });
+};
+
+export const clearCommentListener = () => {
+  if (commentListenerInstance != null) {
+    commentListenerInstance();
+    commentListenerInstance = null;
   }
 };

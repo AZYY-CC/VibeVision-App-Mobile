@@ -28,10 +28,11 @@ const HomeFeedScreen = () => {
   const renderItem = ({ item, index }) => {
     return (
       <View
-        style={[
-          { flex: 1, height: Dimensions.get("window").height - 54 },
-          { backgroundColor: "black" },
-        ]}
+        style={{
+          flex: 1,
+          height: Dimensions.get("window").height,
+          backgroundColor: "black",
+        }}
       >
         <PostSingle
           item={item}

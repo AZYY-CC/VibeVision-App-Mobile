@@ -1,13 +1,15 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getLikeById, updateLike } from "../../../../services/posts";
 
 import styles from "./styles";
+import { openCommentModal } from "../../../../store/actions";
 
 const PostSingleOverlay = ({ user, post }) => {
   const currentUser = useSelector((state) => state.auth.currentUser);
+  const dispatch = useDispatch()
   const [currentLikeState, setCurrentLikeState] = useState({
     state: false,
     counter: post.likesCount,
@@ -15,7 +17,7 @@ const PostSingleOverlay = ({ user, post }) => {
 
   useEffect(() => {
     getLikeById(post.id, currentUser.uid).then((res) => {
-      console.log(res)
+      console.log(res);
       setCurrentLikeState({
         counter: post.likesCount,
         state: res,
@@ -57,7 +59,10 @@ const PostSingleOverlay = ({ user, post }) => {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.actionButton}>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() => dispatch(openCommentModal(true, post))}
+        >
           <Ionicons color="white" size={40} name={"chatbubble"} />
           <Text style={styles.actionButtonText}>{post.commentsCount}</Text>
         </TouchableOpacity>
