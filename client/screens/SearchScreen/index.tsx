@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, FlatList } from "react-native";
+import { TextInput, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-// import SearchUserItem from '../../components/search/userItem'
-// import { queryUsersByEmail } from '../../services/user'
 import styles from "./styles";
 import SearchUserItem from "./SearchUserItem";
 import { queryUsersByEmail } from "../../services/user";

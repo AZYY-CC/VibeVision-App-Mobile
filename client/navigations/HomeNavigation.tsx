@@ -9,6 +9,7 @@ import {
   SearchScreen,
 } from "../screens";
 import FeedNavigation from "./FeedNavigation";
+import { auth } from "../configs/firebase";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -66,6 +67,7 @@ const HomeNavigation = () => {
             <Feather name="user" size={24} color={color} />
           ),
         }}
+        initialParams={{ initialUserId: auth.currentUser?.uid }}
       />
     </Tab.Navigator>
   );

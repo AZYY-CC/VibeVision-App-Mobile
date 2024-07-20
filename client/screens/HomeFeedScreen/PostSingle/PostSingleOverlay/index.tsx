@@ -6,10 +6,13 @@ import { getLikeById, updateLike } from "../../../../services/posts";
 
 import styles from "./styles";
 import { openCommentModal } from "../../../../store/actions";
+import { useNavigation } from "@react-navigation/core";
 
 const PostSingleOverlay = ({ user, post }) => {
   const currentUser = useSelector((state) => state.auth.currentUser);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   const [currentLikeState, setCurrentLikeState] = useState({
     state: false,
     counter: post.likesCount,
@@ -41,7 +44,11 @@ const PostSingleOverlay = ({ user, post }) => {
       </View>
 
       <View style={styles.leftContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("profileOther", { initialUserId: user?.uid })
+          }
+        >
           <Image style={styles.avatar} source={{ uri: user?.photoURL }} />
         </TouchableOpacity>
 

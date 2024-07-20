@@ -4,7 +4,9 @@ import styles from "./styles";
 import PostSingle from "./PostSingle";
 import { getFeed } from "../../services/posts";
 
-const HomeFeedScreen = () => {
+const HomeFeedScreen = ({ route }) => {
+  const { setCurrentUserProfileItemInView, creator, profile } = route.params;
+
   const [posts, setPosts] = useState([]);
   const mediaRefs = useRef([]);
 
@@ -17,6 +19,9 @@ const HomeFeedScreen = () => {
       const cell = mediaRefs.current[element.key];
       if (cell) {
         if (element.isViewable) {
+          if (!profile) {
+            setCurrentUserProfileItemInView(element.item.creator);
+          }
           cell.play();
         } else {
           cell.stop();

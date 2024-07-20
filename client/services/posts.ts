@@ -9,8 +9,9 @@ import {
   query,
   runTransaction,
   serverTimestamp,
+  where,
 } from "firebase/firestore";
-import { db } from "../configs/firebase";
+import { auth, db } from "../configs/firebase";
 
 let commentListenerInstance = null;
 
@@ -124,3 +125,29 @@ export const clearCommentListener = () => {
     commentListenerInstance = null;
   }
 };
+
+export const getPostsByUserId = async (uid = auth.currentUser?.uid) => {
+  try {
+    const postsQuery = query(
+      collection(db, 'posts'),
+      where('creator', '==', uid),
+      orderBy('creation', 'desc')
+    )
+
+    const posts = await new Promise((resolve, reject) => {
+      onSnapshot(postsQuery, (snapshot) => {
+        const postsData = snapshot.docs.map(doc => {
+          const data = doc.data()
+          const id = doc.id
+          return { id, ...data }
+        })
+        resolve(postsData)
+      }, reject)
+    })
+
+    return posts
+  } catch (error) {
+    console.error('Error fetching posts:', error)
+    throw error
+  }
+}
