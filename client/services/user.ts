@@ -2,10 +2,12 @@ import { auth, db } from "../configs/firebase";
 import { saveMediaToStorage } from "./random";
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
   query,
+  setDoc,
   updateDoc,
   where,
 } from "firebase/firestore";
@@ -78,5 +80,41 @@ export const getUserById = async (id: string) => {
     return snapshot.exists() ? snapshot.data() : null;
   } catch (error) {
     throw new Error("Failed to retrieve user data");
+  }
+};
+
+export const getIsFollowing = async (userId, otherUserId) => {
+  try {
+    const followingDocRef = doc(db, "user", userId, "following", otherUserId);
+    const docSnapshot = await getDoc(followingDocRef);
+
+    return docSnapshot.exists();
+  } catch (error) {
+    console.error("Error checking following status:", error);
+    throw error;
+  }
+};
+
+export const changeFollowState = async ({ otherUserId, isFollowing }) => {
+  try {
+    const currentUserId = auth.currentUser?.uid;
+    const followingDocRef = doc(
+      db,
+      "user",
+      currentUserId,
+      "following",
+      otherUserId
+    );
+
+    if (isFollowing) {
+      await deleteDoc(followingDocRef);
+    } else {
+      await setDoc(followingDocRef, {});
+    }
+
+    return;
+  } catch (error) {
+    console.error("Error changing follow state:", error);
+    throw error;
   }
 };
