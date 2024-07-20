@@ -2,7 +2,7 @@ import { View, FlatList, Dimensions, Text } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./styles";
 import PostSingle from "./PostSingle";
-import { getFeed } from "../../services/posts";
+import { getFeed, getPostsByUserId } from "../../services/posts";
 
 const HomeFeedScreen = ({ route }) => {
   const { setCurrentUserProfileItemInView, creator, profile } = route.params;
@@ -11,8 +11,12 @@ const HomeFeedScreen = ({ route }) => {
   const mediaRefs = useRef([]);
 
   useEffect(() => {
-    getFeed().then(setPosts);
-  }, []);
+    if (profile) {
+        getPostsByUserId(creator).then(setPosts)
+    } else {
+        getFeed().then(setPosts)
+    }
+}, [])
 
   const onViewableItemsChanged = useRef(({ changed }) => {
     changed.forEach((element) => {
