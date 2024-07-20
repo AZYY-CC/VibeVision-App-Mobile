@@ -33,8 +33,8 @@ const PostSingle = ({ item }, parentRef) => {
     }
     try {
       await ref.current.playAsync();
-    } catch (e) {
-      console.log(e);
+    } catch (error: any) {
+      console.log("Error:", error);
     }
   };
 
@@ -49,8 +49,8 @@ const PostSingle = ({ item }, parentRef) => {
     }
     try {
       await ref.current.stopAsync();
-    } catch (e) {
-      console.log(e);
+    } catch (error: any) {
+      console.log("Error:", error);
     }
   };
 
@@ -61,8 +61,8 @@ const PostSingle = ({ item }, parentRef) => {
 
     try {
       await ref.current.unloadAsync();
-    } catch (e) {
-      console.log(e);
+    } catch (error: any) {
+      console.log("Error:", error);
     }
   };
   return (

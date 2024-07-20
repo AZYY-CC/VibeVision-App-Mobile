@@ -15,7 +15,6 @@ const SearchScreen = () => {
     queryUsersByEmail(textInput).then(setSearchUsers);
   }, [textInput]);
 
-  console.log(searchUsers);
   return (
     <SafeAreaView style={styles.container}>
       <TextInput
