@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./styles";
 import PostSingle from "./PostSingle";
 import { getFeed, getPostsByUserId } from "../../services/posts";
+import useMaterialNavBarHeight from "../../hooks/useMaterialNavBarHeight";
 
 const HomeFeedScreen = ({ route }) => {
   const { setCurrentUserProfileItemInView, creator, profile } = route.params;
@@ -34,12 +35,14 @@ const HomeFeedScreen = ({ route }) => {
     });
   });
 
+  const feedItemHeight = Dimensions.get('window').height - useMaterialNavBarHeight(profile);
+
   const renderItem = ({ item, index }) => {
     return (
       <View
         style={{
           flex: 1,
-          height: Dimensions.get("window").height,
+          height: feedItemHeight,
           backgroundColor: "black",
         }}
       >
