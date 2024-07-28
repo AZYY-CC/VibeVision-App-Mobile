@@ -4,12 +4,14 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import { Feather } from "@expo/vector-icons";
 import {
   CameraScreen,
+  ChatsScreen,
   HomeFeedScreen,
   ProfileScreen,
   SearchScreen,
 } from "../screens";
 import FeedNavigation from "./FeedNavigation";
 import { auth } from "../configs/firebase";
+import { useChats } from "../hooks/useChats";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -18,6 +20,8 @@ const EmptyScreen = () => {
 };
 
 const HomeNavigation = () => {
+  useChats();
+
   return (
     <Tab.Navigator
       barStyle={{ backgroundColor: "white" }}
@@ -52,7 +56,7 @@ const HomeNavigation = () => {
       />
       <Tab.Screen
         name="Chats"
-        component={EmptyScreen}
+        component={ChatsScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <Feather name="message-square" size={24} color={color} />

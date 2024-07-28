@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   Auth,
+  ChatsDetailsScreen,
   CreatePost,
   EditProfile,
   EditProfileField,
@@ -70,6 +71,11 @@ const RootNavigation = () => {
             <Stack.Screen
               name="editProfileField"
               component={EditProfileField}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="chatDetails"
+              component={ChatsDetailsScreen}
               options={{ headerShown: false }}
             />
           </>
