@@ -36,9 +36,14 @@ const AuthDetails = ({ authPage, setDetailsPage }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => setDetailsPage(false)}>
-        <Feather name="arrow-left" size={24} color="black" />
-      </TouchableOpacity>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={() => setDetailsPage(false)}>
+          <Feather name="arrow-left" size={24} color="black" />
+        </TouchableOpacity>
+        <Text style={styles.headerText}>
+          {authPage == 0 ? "Sign In" : "Sign Up"}
+        </Text>
+      </View>
 
       <TextInput
         onChangeText={(text) => setEmail(text)}
