@@ -9,7 +9,7 @@ import {
 } from "../../components";
 import { useSelector } from "react-redux";
 import { CurrentUserProfileItemInViewContext } from "../../navigations/FeedNavigation";
-import { useUser } from "../../hooks/userUser";
+import { useUser } from "../../hooks/useUser";
 import { getPostsByUserId } from "../../services/posts";
 
 const ProfileScreen = ({ route }) => {

@@ -6,7 +6,7 @@ import React, {
   useRef,
 } from "react";
 import styles from "./styles";
-import { useUser } from "../../../hooks/userUser";
+import { useUser } from "../../../hooks/useUser";
 import PostSingleOverlay from "./PostSingleOverlay";
 
 const PostSingle = ({ item }, parentRef) => {

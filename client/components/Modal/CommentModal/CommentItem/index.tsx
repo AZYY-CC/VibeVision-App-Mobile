@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
 import styles from "./styles";
-import { useUser } from "../../../../hooks/userUser";
+import { useUser } from "../../../../hooks/useUser";
 import generalStyles from "../../../../styles/generalStyles";
 
 const CommentItem = ({ item }) => {
